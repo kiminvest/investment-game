@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>투자 성향 테스트</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f3f4f6;
+      margin: 0;
+      padding: 0;
+    }
+    #app {
+      max-width: 600px;
+      width: 90%;
+      margin: 20px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      position: relative;
+      z-index: 10;
+    }
+    h1, h2, h3 {
+      margin-bottom: 16px;
+    }
+    button {
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 8px 0;
+    }
+    .primary-btn {
+      background-color: #3b82f6;
+      color: white;
+    }
+    .primary-btn:hover {
+      background-color: #2563eb;
+    }
+    .secondary-btn {
+      background-color: #6b7280;
+      color: white;
+    }
+    .secondary-btn:hover {
+      background-color: #4b5563;
+    }
+    .option-btn {
+      width: 100%;
+      text-align: left;
+      padding: 16px;
+      background-color: #f3f4f6;
+      border-radius: 8px;
+    }
+    .option-btn:hover {
+      background-color: #e5e7eb;
+    }
+    .hidden {
+      display: none;
+    }
+    .share-btn {
+      padding: 8px 16px;
+      margin-right: 8px;
+    }
+    .share-btn.twitter {
+      background-color: #1da1f2;
+    }
+    .share-btn.facebook {
+      background-color: #1877f2;
+    }
+    .share-btn.linkedin {
+      background-color: #0a66c2;
+    }
+    @media (max-width: 768px) {
+      #app {
+        width: 100%;
+        padding: 10px;
+      }
+      .sidebar, #sidebar-left {
+        display: none !important;
+      }
+    }
+  </style>
+
+</head>
+<body>
+  <div id="app" class="max-w-2xl mx-auto p-4">
+    <!-- 시작 화면 -->
+    <div id="start-screen" class="bg-white rounded-lg shadow-lg p-6 text-center">
+      <h1 class="text-3xl font-bold mb-4">당신의 투자 성향은?</h1>
+      <p class="text-lg mb-6">20문항으로 알아보는 MBTI 스타일 투자 성향 테스트! 워렌 버핏형? 캐시 우드형? 지금 알아보세요!</p>
+      <button onclick="startQuiz()" class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600">테스트 시작</button>
+    </div>
+
+    <!-- 퀴즈 화면 -->
+    <div id="quiz-screen" class="hidden bg-white rounded-lg shadow-lg p-6">
+      <h2 class="text-2xl font-bold mb-4">문항 <span id="question-number"></span>/20</h2>
+      <p id="question-text" class="text-lg mb-6"></p>
+      <div id="options" class="space-y-4"></div>
+      <div class="mt-6 flex justify-between">
+        <button onclick="prevQuestion()" class="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400">이전</button>
+        <button onclick="nextQuestion()" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">다음</button>
+      </div>
+    </div>
+
+    <!-- 결과 화면 -->
+    <div id="result-screen" class="hidden bg-white rounded-lg shadow-lg p-6">
+      <h2 class="text-2xl font-bold mb-4">당신의 투자 성향은?</h2>
+      <h3 id="result-type" class="text-xl font-semibold text-blue-600"></h3>
+      <p id="result-description" class="text-lg mt-4"></p>
+      <div class="mt-6">
+        <h4 class="text-lg font-semibold">추천 종목/ETF</h4>
+        <ul id="recommendations" class="list-disc pl-5 mt-2"></ul>
+      </div>
+      <div class="mt-6">
+        <h4 class="text-lg font-semibold">결과 공유하기</h4>
+        <div class="flex space-x-4 mt-2">
+          <button onclick="shareTwitter()" class="bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-500">X</button>
+          <button onclick="shareFacebook()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Facebook</button>
+          <button onclick="shareLinkedIn()" class="bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-900">LinkedIn</button>
+        </div>
+      </div>
+      <button onclick="restartQuiz()" class="mt-6 bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600">다시 하기</button>
+    </div>
+  </div>
+
+  <script>
+  const _0x3b4960=_0x3c81;function _0x1e7c(){const _0x5aaf59=['원인을\x20분석하고\x20전략을\x20수정한다','단기\x20트레이딩\x20기술','캐시\x20우드처럼\x20혁신과\x20기술에\x20투자하는\x20당신!\x20고위험\x20고수익을\x20추구하며\x20미래를\x20내다봅니다.','iShares\x20ESG\x20Aware\x20MSCI\x20USA\x20ETF\x20(ESGU)','options','getElementById','혁신과\x20성장','투자의\x20궁극적인\x20목표는?','원금\x20손실','상황에\x20따라\x20유동적','넥스트에라\x20에너지\x20(NEE)','#/pltr','아메리칸\x20타워\x20(AMT)','add','techVisionary','stability','정보\x20부족','패시브\x20전략가','#/amt','안정적인\x205~10%\x20수익','#/crwd','직접\x20시장을\x20분석','안정성과\x20보수','length','\x20투자자입니다!\x20투자\x20성향\x20테스트로\x20나만의\x20스타일을\x20알아보세요!','realEstateMogul','주식\x20외에\x20관심\x20있는\x20투자\x20분야는?','배당\x20사냥꾼','매우\x20낮음','onclick','시장\x20트렌드와\x20뉴스','투자\x20규모를\x20줄임','2763224RbLvPg','adventureTrader','_blank','데이\x20트레이딩','#/pg','리스크와\x20안정성의\x20균형을\x20추구하는\x20당신!\x20다양한\x20자산에\x20분산\x20투자하며\x20안정적인\x20성장을\x20노립니다.','#/pld','innerHTML','appendChild','테크\x20스타트업\x20투자','시장\x20평균\x20이상','주\x201~2회\x20체크','question-text','금,\x20은,\x20원유\x20등\x20원자재에\x20매력을\x20느끼는\x20당신!\x20경제\x20변동에\x20대비한\x20투자를\x20선호합니다.','20cjnIUp','투자\x20관련\x20책을\x20읽는다면?','상황에\x20따라\x20다름','&summary=','826335WAMRUx','question-number','className','iShares\x20Silver\x20Trust\x20(SLV)','투자\x20자체의\x20즐거움','#/xle','초기\x20단계\x20기업과\x20벤처\x20투자에\x20열정적인\x20당신!\x20큰\x20위험을\x20감수하며\x20폭발적\x20성장을\x20노립니다.','투자\x20실패\x20경험이\x20있다면?','투자\x20결정을\x20내릴\x20때\x20가장\x20중요하게\x20생각하는\x20것은?','채권과\x20예금','테크\x20비전가','#/spy','안정적인\x20배당\x20수익을\x20사랑하는\x20당신!\x20꾸준한\x20현금\x20흐름을\x20통해\x20재무\x20안정성을\x20추구합니다.','#/msft','최신\x20테크\x20트렌드\x20분석','실전\x20트레이딩\x20기술','계획적이고\x20체계적','빠르게\x20투자해\x20기회를\x20잡는다','SPDR\x20Gold\x20Shares\x20(GLD)','20%\x20이상\x20고수익','스타트업\x20사냥꾼','더\x20큰\x20수익을\x20위해\x20리스크를\x20감수한다','존슨앤존슨\x20(JNJ)','Invesco\x20QQQ\x20ETF\x20(QQQ)','엔비디아\x20(NVDA)','장기적으로\x20회복될\x20거라\x20믿는다','침착하게\x20상황을\x20관찰하며\x20기다린다','1~2년\x20중기\x20투자','open','테슬라\x20(TSLA)','주식\x20시장이\x2010%\x20하락했다.\x20당신의\x20반응은?','코인베이스\x20(COIN)','href','result-description','#/enph','투자\x20관련\x20정보를\x20어디서\x20얻나요?','#/vti','리스크는\x20신경\x20안\x20씀','시장\x20소식은\x20신경\x20안\x20쓴다','text','타이밍과\x20민첩성','몇\x20년\x20이상\x20장기\x20투자','직접\x20체험해보고\x20결정한다','https://twitter.com/intent/tweet?text=','325152zGnndK','신중하고\x20꼼꼼하다','textDecoration','기업\x20보고서와\x20공시','classList','SPDR\x20S&P\x20500\x20ETF\x20(SPY)','투자\x20방식을\x20바꿈','textContent','몇\x20개월\x20단기\x20투자','name','친환경\x20전도사','&url=','실패를\x20교훈\x20삼아\x20신중해짐','#/schb','result-type','createElement','주변에서\x20당신의\x20투자\x20스타일을\x20평가한다면?','미래\x20성장\x20가능성과\x20혁신','hidden','기회\x20상실','부동산과\x20대체\x20자산에\x20관심이\x20많은\x20당신!\x20실물\x20자산을\x20통해\x20안정적인\x20수익을\x20추구합니다.','greenEvangelist','모험\x20트레이더','독립적이고\x20독창적','3878145NUopJE','더\x20큰\x20기회를\x20찾아\x20도전','투자\x20성향\x20테스트','8923212BohZUa','가치\x20투자\x20대가','투자에\x20얼마나\x20많은\x20시간을\x20투자하나요?','#/voo','최소\x20노력으로\x20안정적인\x20수익을\x20추구하는\x20당신!\x20ETF와\x20인덱스\x20펀드로\x20효율적인\x20투자를\x20합니다.','description','#/jnj','\x20투자자!\x20나의\x20투자\x20성향을\x20알아보세요!','독립적\x20판단','투자\x20관련\x20세미나에\x20참석한다면?','큰\x20부의\x20축적','모든\x20정보를\x20골고루','경제적\x20자유','quiz-screen','포트폴리오\x20관리','상황에\x20따라\x20조정','균형\x20투자자','#/ko','버크셔\x20해서웨이\x20(BRK.A)','#/esgu','철저히\x20조사한\x20후\x20소량\x20투자','result-screen','직감에\x20따라\x20행동','매일\x20시장을\x20분석','remove','경제\x20전망\x20분석','#/slv','#/aapl','#/snow','나는\x20','commodityExplorer','바로\x20소액\x20투자','#/vnq','포트폴리오를\x20점검하며\x20전략을\x20조정한다','잘못된\x20판단','#/nvda','forEach','startupHunter','코카콜라\x20(KO)','underline','에너지\x20셀렉트\x20섹터\x20SPDR\x20(XLE)','새로운\x20투자\x20기회가\x20생겼다.\x20당신의\x20접근은?','ARK\x20Innovation\x20ETF\x20(ARKK)','마이크로소프트\x20(MSFT)','원자재(금,\x20은\x20등)','#/tsla','전문가\x20칼럼과\x20뉴스','14LvFECh','투자에서\x20가장\x20두려운\x20것은?','안정적인\x20수익\x20창출','거시경제\x20지표를\x20분석','link','10882cFuVJx','recommendations','매우\x20높음','안정적인\x20기존\x20자산을\x20유지','투자를\x20줄이고\x20현금을\x20확보한다','start-screen','투자에\x20있어\x20가장\x20중요한\x20가치는?','231EzvUof','584578mdIYBG','투자\x20포트폴리오의\x20다양성은?','location','시장\x20변동성','기업\x20실적에\x20집중','친구가\x20새로운\x20투자처를\x20추천한다면?','다양한\x20대체\x20투자','투자\x20수익률이\x20기대보다\x20낮다면?','팔란티어\x20(PLTR)','color','트렌드\x20따라\x20자주\x20변경','#/gld','다른\x20투자자들의\x20반응을\x20본다','고위험\x20자산\x20위주로\x20집중','#/vig','보통\x20수준','직감과\x20본능','전문가에게\x20맡김','button'];_0x1e7c=function(){return _0x5aaf59;};return _0x1e7c();}(function(_0x2d53f8,_0x199359){const _0x540be2=_0x3c81,_0x3328c6=_0x2d53f8();while(!![]){try{const _0x1a028c=parseInt(_0x540be2(0xb9))/0x1+-parseInt(_0x540be2(0xb1))/0x2*(-parseInt(_0x540be2(0xb8))/0x3)+parseInt(_0x540be2(0x12a))/0x4+-parseInt(_0x540be2(0xfe))/0x5+-parseInt(_0x540be2(0x145))/0x6+parseInt(_0x540be2(0xac))/0x7*(parseInt(_0x540be2(0xec))/0x8)+-parseInt(_0x540be2(0x142))/0x9*(-parseInt(_0x540be2(0xfa))/0xa);if(_0x1a028c===_0x199359)break;else _0x3328c6['push'](_0x3328c6['shift']());}catch(_0x165a5b){_0x3328c6['push'](_0x3328c6['shift']());}}}(_0x1e7c,0xf078a));function _0x3c81(_0x5ed420,_0x3cfdbc){const _0x1e7c58=_0x1e7c();return _0x3c81=function(_0x3c8128,_0x38e745){_0x3c8128=_0x3c8128-0xaa;let _0x397d02=_0x1e7c58[_0x3c8128];return _0x397d02;},_0x3c81(_0x5ed420,_0x3cfdbc);}const questions=[{'text':_0x3b4960(0x11c),'options':[{'text':'즉시\x20매도해\x20손실을\x20최소화한다','risk':0x2,'stability':0x0},{'text':_0x3b4960(0x118),'risk':0x0,'stability':0x2},{'text':'추가\x20매수\x20기회로\x20보고\x20더\x20산다','risk':0x4,'stability':0x0},{'text':_0x3b4960(0x166),'risk':0x1,'stability':0x1},{'text':_0x3b4960(0x124),'risk':0x0,'stability':0x3}]},{'text':_0x3b4960(0x106),'options':[{'text':'기업의\x20재무제표와\x20실적','risk':0x0,'stability':0x3},{'text':_0x3b4960(0x13b),'risk':0x3,'stability':0x0},{'text':_0x3b4960(0xea),'risk':0x2,'stability':0x1},{'text':'전문가의\x20추천과\x20조언','risk':0x1,'stability':0x2},{'text':_0x3b4960(0xc9),'risk':0x4,'stability':0x0}]},{'text':_0x3b4960(0xc0),'options':[{'text':'안전한\x20자산으로\x20갈아탄다','risk':0x0,'stability':0x3},{'text':_0x3b4960(0xcc),'risk':0x1,'stability':0x2},{'text':_0x3b4960(0x113),'risk':0x4,'stability':0x0},{'text':_0x3b4960(0x117),'risk':0x0,'stability':0x2},{'text':_0x3b4960(0xb5),'risk':0x0,'stability':0x3}]},{'text':_0x3b4960(0x16e),'options':[{'text':_0x3b4960(0x159),'risk':0x1,'stability':0x2},{'text':_0x3b4960(0x10f),'risk':0x4,'stability':0x0},{'text':_0x3b4960(0xb4),'risk':0x0,'stability':0x3},{'text':_0x3b4960(0xc5),'risk':0x2,'stability':0x1},{'text':_0x3b4960(0x128),'risk':0x3,'stability':0x0}]},{'text':_0x3b4960(0x121),'options':[{'text':_0x3b4960(0x12d),'risk':0x0,'stability':0x3},{'text':'소셜\x20미디어와\x20커뮤니티','risk':0x3,'stability':0x0},{'text':_0x3b4960(0xab),'risk':0x1,'stability':0x2},{'text':'친구나\x20동료의\x20추천','risk':0x2,'stability':0x1},{'text':_0x3b4960(0xe1),'risk':0x2,'stability':0x2}]},{'text':'투자\x20기간은\x20어느\x20정도를\x20선호하나요?','options':[{'text':_0x3b4960(0x127),'risk':0x0,'stability':0x3},{'text':_0x3b4960(0x119),'risk':0x1,'stability':0x2},{'text':_0x3b4960(0x132),'risk':0x3,'stability':0x0},{'text':_0x3b4960(0xd5),'risk':0x2,'stability':0x1},{'text':_0x3b4960(0xef),'risk':0x4,'stability':0x0}]},{'text':_0x3b4960(0xba),'options':[{'text':'몇\x20개의\x20안정적인\x20자산\x20위주','risk':0x0,'stability':0x3},{'text':'다양한\x20자산으로\x20분산\x20투자','risk':0x1,'stability':0x2},{'text':_0x3b4960(0xc6),'risk':0x4,'stability':0x0},{'text':_0x3b4960(0xc3),'risk':0x3,'stability':0x0},{'text':'상황에\x20따라\x20조정','risk':0x2,'stability':0x1}]},{'text':_0x3b4960(0xe6),'options':[{'text':_0x3b4960(0x107),'risk':0x0,'stability':0x3},{'text':'암호화폐와\x20NFT','risk':0x4,'stability':0x0},{'text':'부동산','risk':0x1,'stability':0x2},{'text':_0x3b4960(0x171),'risk':0x2,'stability':0x1},{'text':_0x3b4960(0xbf),'risk':0x3,'stability':0x0}]},{'text':_0x3b4960(0x105),'options':[{'text':_0x3b4960(0x136),'risk':0x0,'stability':0x3},{'text':_0x3b4960(0x143),'risk':0x4,'stability':0x0},{'text':'전문가에게\x20조언\x20구함','risk':0x1,'stability':0x2},{'text':_0x3b4960(0xeb),'risk':0x0,'stability':0x3},{'text':_0x3b4960(0x130),'risk':0x2,'stability':0x1}]},{'text':_0x3b4960(0xfb),'options':[{'text':'워렌\x20버핏의\x20투자\x20철학','risk':0x0,'stability':0x3},{'text':_0x3b4960(0x10c),'risk':0x3,'stability':0x0},{'text':'경제학\x20기초\x20이론','risk':0x1,'stability':0x2},{'text':'심리학과\x20투자','risk':0x2,'stability':0x1},{'text':_0x3b4960(0x10d),'risk':0x4,'stability':0x0}]},{'text':_0x3b4960(0x147),'options':[{'text':'가끔\x20점검하는\x20정도','risk':0x0,'stability':0x3},{'text':_0x3b4960(0x15c),'risk':0x3,'stability':0x0},{'text':_0x3b4960(0xf7),'risk':0x1,'stability':0x2},{'text':_0x3b4960(0xca),'risk':0x0,'stability':0x3},{'text':_0x3b4960(0xfc),'risk':0x2,'stability':0x1}]},{'text':'투자\x20수익\x20목표는?','options':[{'text':_0x3b4960(0xdf),'risk':0x0,'stability':0x3},{'text':_0x3b4960(0x111),'risk':0x4,'stability':0x0},{'text':_0x3b4960(0xf6),'risk':0x2,'stability':0x1},{'text':'원금\x20보존이\x20우선','risk':0x0,'stability':0x3},{'text':'상황에\x20따라\x20조정','risk':0x1,'stability':0x2}]},{'text':_0x3b4960(0x13a),'options':[{'text':_0x3b4960(0x12b),'risk':0x0,'stability':0x3},{'text':'대담하고\x20과감하다','risk':0x4,'stability':0x0},{'text':'유연하고\x20적응력\x20있다','risk':0x2,'stability':0x1},{'text':_0x3b4960(0x10e),'risk':0x1,'stability':0x2},{'text':_0x3b4960(0x141),'risk':0x3,'stability':0x0}]},{'text':'투자\x20관련\x20뉴스를\x20볼\x20때?','options':[{'text':_0x3b4960(0xbd),'risk':0x0,'stability':0x3},{'text':'기술\x20혁신\x20소식에\x20주목','risk':0x3,'stability':0x0},{'text':_0x3b4960(0xaf),'risk':0x1,'stability':0x2},{'text':'인기\x20종목\x20동향을\x20확인','risk':0x2,'stability':0x1},{'text':_0x3b4960(0x150),'risk':0x2,'stability':0x2}]},{'text':_0x3b4960(0xad),'options':[{'text':_0x3b4960(0xd4),'risk':0x0,'stability':0x3},{'text':_0x3b4960(0x13d),'risk':0x4,'stability':0x0},{'text':_0x3b4960(0xbc),'risk':0x1,'stability':0x2},{'text':_0x3b4960(0xdc),'risk':0x2,'stability':0x1},{'text':_0x3b4960(0x167),'risk':0x3,'stability':0x0}]},{'text':_0x3b4960(0xb7),'options':[{'text':_0x3b4960(0xe2),'risk':0x0,'stability':0x3},{'text':_0x3b4960(0xd2),'risk':0x4,'stability':0x0},{'text':'균형과\x20분산','risk':0x1,'stability':0x2},{'text':_0x3b4960(0x126),'risk':0x3,'stability':0x0},{'text':_0x3b4960(0x14d),'risk':0x2,'stability':0x1}]},{'text':_0x3b4960(0xbe),'options':[{'text':'철저히\x20조사\x20후\x20결정','risk':0x0,'stability':0x3},{'text':_0x3b4960(0x164),'risk':0x3,'stability':0x0},{'text':'전문가\x20의견을\x20물어봄','risk':0x1,'stability':0x2},{'text':'트렌드를\x20보고\x20판단','risk':0x2,'stability':0x1},{'text':_0x3b4960(0x15b),'risk':0x4,'stability':0x0}]},{'text':'투자\x20포트폴리오의\x20리스크\x20수준은?','options':[{'text':_0x3b4960(0xe8),'risk':0x0,'stability':0x3},{'text':_0x3b4960(0xb3),'risk':0x4,'stability':0x0},{'text':_0x3b4960(0xc8),'risk':0x2,'stability':0x1},{'text':_0x3b4960(0x154),'risk':0x1,'stability':0x2},{'text':_0x3b4960(0x123),'risk':0x3,'stability':0x0}]},{'text':_0x3b4960(0x14e),'options':[{'text':'가치\x20투자\x20전략','risk':0x0,'stability':0x3},{'text':_0x3b4960(0xf5),'risk':0x4,'stability':0x0},{'text':_0x3b4960(0x153),'risk':0x1,'stability':0x2},{'text':_0x3b4960(0xcd),'risk':0x3,'stability':0x0},{'text':_0x3b4960(0x15e),'risk':0x2,'stability':0x1}]},{'text':_0x3b4960(0xd3),'options':[{'text':'재무적\x20안정','risk':0x0,'stability':0x3},{'text':_0x3b4960(0x14f),'risk':0x4,'stability':0x0},{'text':_0x3b4960(0x151),'risk':0x2,'stability':0x1},{'text':_0x3b4960(0xae),'risk':0x1,'stability':0x2},{'text':_0x3b4960(0x102),'risk':0x3,'stability':0x0}]}],resultTypes={'valueMaster':{'name':_0x3b4960(0x146),'description':'당신은\x20워렌\x20버핏처럼\x20기업의\x20내재\x20가치를\x20분석하며\x20장기\x20투자에\x20집중합니다.\x20시장\x20변동에도\x20흔들리지\x20않는\x20침착함이\x20강점입니다.','recommendations':[{'text':_0x3b4960(0x16b),'link':_0x3b4960(0x156)},{'text':_0x3b4960(0x12f),'link':_0x3b4960(0x109)},{'text':_0x3b4960(0x157),'link':'#/brk'}]},'techVisionary':{'name':_0x3b4960(0x108),'description':_0x3b4960(0xce),'recommendations':[{'text':_0x3b4960(0x11b),'link':_0x3b4960(0xaa)},{'text':_0x3b4960(0x16f),'link':'#/arkk'},{'text':_0x3b4960(0x11d),'link':'#/coin'}]},'dividendHunter':{'name':_0x3b4960(0xe7),'description':_0x3b4960(0x10a),'recommendations':[{'text':_0x3b4960(0x114),'link':_0x3b4960(0x14b)},{'text':'Vanguard\x20Dividend\x20Appreciation\x20ETF\x20(VIG)','link':_0x3b4960(0xc7)},{'text':'프록터앤갬블\x20(PG)','link':_0x3b4960(0xf0)}]},'adventureTrader':{'name':_0x3b4960(0x140),'description':'단기\x20트레이딩과\x20고위험\x20투자를\x20즐기는\x20당신!\x20빠른\x20판단과\x20과감한\x20행동이\x20특징입니다.','recommendations':[{'text':_0x3b4960(0x116),'link':_0x3b4960(0x168)},{'text':_0x3b4960(0x115),'link':'#/qqq'},{'text':_0x3b4960(0xc1),'link':_0x3b4960(0xd7)}]},'balancedInvestor':{'name':_0x3b4960(0x155),'description':_0x3b4960(0xf1),'recommendations':[{'text':'애플\x20(AAPL)','link':_0x3b4960(0x160)},{'text':'Vanguard\x20Total\x20Stock\x20Market\x20ETF\x20(VTI)','link':_0x3b4960(0x122)},{'text':_0x3b4960(0x170),'link':_0x3b4960(0x10b)}]},'realEstateMogul':{'name':'부동산\x20마스터','description':_0x3b4960(0x13e),'recommendations':[{'text':'Vanguard\x20Real\x20Estate\x20ETF\x20(VNQ)','link':_0x3b4960(0x165)},{'text':'프로로지스\x20(PLD)','link':_0x3b4960(0xf2)},{'text':_0x3b4960(0xd8),'link':_0x3b4960(0xde)}]},'greenEvangelist':{'name':_0x3b4960(0x134),'description':'ESG와\x20친환경\x20투자에\x20열정을\x20가진\x20당신!\x20지속\x20가능한\x20미래를\x20위해\x20투자합니다.','recommendations':[{'text':_0x3b4960(0xd6),'link':'#/nee'},{'text':_0x3b4960(0xcf),'link':_0x3b4960(0x158)},{'text':'엔페이즈\x20에너지\x20(ENPH)','link':_0x3b4960(0x120)}]},'commodityExplorer':{'name':'원자재\x20탐험가','description':_0x3b4960(0xf9),'recommendations':[{'text':_0x3b4960(0x110),'link':_0x3b4960(0xc4)},{'text':_0x3b4960(0x101),'link':_0x3b4960(0x15f)},{'text':_0x3b4960(0x16d),'link':_0x3b4960(0x103)}]},'startupHunter':{'name':_0x3b4960(0x112),'description':_0x3b4960(0x104),'recommendations':[{'text':'스노우플레이크\x20(SNOW)','link':_0x3b4960(0x161)},{'text':'ARK\x20Venture\x20Fund\x20(ARKVX)','link':'#/arkvx'},{'text':'크라우드스트라이크\x20(CRWD)','link':_0x3b4960(0xe0)}]},'passiveStrategist':{'name':_0x3b4960(0xdd),'description':_0x3b4960(0x149),'recommendations':[{'text':'Vanguard\x20S&P\x20500\x20ETF\x20(VOO)','link':_0x3b4960(0x148)},{'text':'iShares\x20Core\x20MSCI\x20Total\x20International\x20Stock\x20ETF\x20(IXUS)','link':'#/ixus'},{'text':'\x20Schwab\x20U.S.\x20Broad\x20Market\x20ETF\x20(SCHB)','link':_0x3b4960(0x137)}]}};let currentQuestion=0x0,answers=[],riskScore=0x0,stabilityScore=0x0;function startQuiz(){const _0x28d7a4=_0x3b4960;document[_0x28d7a4(0xd1)](_0x28d7a4(0xb6))['classList'][_0x28d7a4(0xd9)](_0x28d7a4(0x13c)),document['getElementById'](_0x28d7a4(0x152))['classList'][_0x28d7a4(0x15d)](_0x28d7a4(0x13c)),showQuestion();}function showQuestion(){const _0x22e03f=_0x3b4960,_0x35876f=questions[currentQuestion];document['getElementById'](_0x22e03f(0xff))[_0x22e03f(0x131)]=currentQuestion+0x1,document[_0x22e03f(0xd1)](_0x22e03f(0xf8))[_0x22e03f(0x131)]=_0x35876f[_0x22e03f(0x125)];const _0x3baec0=document[_0x22e03f(0xd1)](_0x22e03f(0xd0));_0x3baec0[_0x22e03f(0xf3)]='',_0x35876f[_0x22e03f(0xd0)][_0x22e03f(0x169)]((_0x50e307,_0x38121f)=>{const _0x8ef698=_0x22e03f,_0x3bdbb4=document[_0x8ef698(0x139)](_0x8ef698(0xcb));_0x3bdbb4[_0x8ef698(0x100)]='option-btn',_0x3bdbb4[_0x8ef698(0x131)]=_0x50e307[_0x8ef698(0x125)],_0x3bdbb4[_0x8ef698(0xe9)]=()=>selectOption(_0x38121f),_0x3baec0[_0x8ef698(0xf4)](_0x3bdbb4);});}function selectOption(_0x46406c){const _0xd30552=_0x3b4960,_0xecbbca=questions[currentQuestion][_0xd30552(0xd0)][_0x46406c];answers[currentQuestion]=_0xecbbca,riskScore+=_0xecbbca['risk'],stabilityScore+=_0xecbbca[_0xd30552(0xdb)],nextQuestion();}function prevQuestion(){const _0x5a9d58=_0x3b4960;if(currentQuestion>0x0){const _0x175bea=answers[currentQuestion];_0x175bea&&(riskScore-=_0x175bea['risk'],stabilityScore-=_0x175bea[_0x5a9d58(0xdb)]),currentQuestion--,showQuestion();}}function nextQuestion(){const _0x2a576d=_0x3b4960;currentQuestion<questions[_0x2a576d(0xe3)]-0x1?(currentQuestion++,showQuestion()):showResult();}function showResult(){const _0x3806ba=_0x3b4960;document[_0x3806ba(0xd1)](_0x3806ba(0x152))[_0x3806ba(0x12e)][_0x3806ba(0xd9)](_0x3806ba(0x13c)),document[_0x3806ba(0xd1)]('result-screen')['classList']['remove'](_0x3806ba(0x13c));let _0x378e9a;if(riskScore<=0x1e&&stabilityScore>=0x32)_0x378e9a=resultTypes['valueMaster'];else{if(riskScore>=0x32&&stabilityScore<=0x1e)_0x378e9a=resultTypes[_0x3806ba(0xda)];else{if(riskScore<=0x14&&stabilityScore>=0x32)_0x378e9a=resultTypes['dividendHunter'];else{if(riskScore>=0x32&&stabilityScore<=0x14)_0x378e9a=resultTypes[_0x3806ba(0xed)];else{if(riskScore>=0x1e&&riskScore<=0x32&&stabilityScore>=0x1e&&stabilityScore<=0x32)_0x378e9a=resultTypes['balancedInvestor'];else{if(riskScore>=0x14&&riskScore<=0x28&&stabilityScore>=0x28&&stabilityScore<=0x3c)_0x378e9a=resultTypes[_0x3806ba(0xe5)];else{if(riskScore>=0x28&&riskScore<=0x3c&&stabilityScore>=0x14&&stabilityScore<=0x28)_0x378e9a=resultTypes[_0x3806ba(0x13f)];else{if(riskScore>=0x14&&riskScore<=0x28&&stabilityScore>=0x14&&stabilityScore<=0x28)_0x378e9a=resultTypes[_0x3806ba(0x163)];else riskScore>=0x3c&&stabilityScore>=0x14&&stabilityScore<=0x28?_0x378e9a=resultTypes[_0x3806ba(0x16a)]:_0x378e9a=resultTypes['passiveStrategist'];}}}}}}}document[_0x3806ba(0xd1)](_0x3806ba(0x138))[_0x3806ba(0x131)]=_0x378e9a[_0x3806ba(0x133)],document[_0x3806ba(0xd1)](_0x3806ba(0x11f))[_0x3806ba(0x131)]=_0x378e9a[_0x3806ba(0x14a)];const _0x25be3e=document[_0x3806ba(0xd1)](_0x3806ba(0xb2));_0x25be3e[_0x3806ba(0xf3)]='',_0x378e9a[_0x3806ba(0xb2)][_0x3806ba(0x169)](_0x2ef7a0=>{const _0x2fdb27=_0x3806ba,_0x509b50=document[_0x2fdb27(0x139)]('li'),_0x4c4a40=document[_0x2fdb27(0x139)]('a');_0x4c4a40['href']=_0x2ef7a0[_0x2fdb27(0xb0)],_0x4c4a40[_0x2fdb27(0x131)]=_0x2ef7a0[_0x2fdb27(0x125)],_0x4c4a40['style'][_0x2fdb27(0xc2)]='#3b82f6',_0x4c4a40['style'][_0x2fdb27(0x12c)]=_0x2fdb27(0x16c),_0x509b50[_0x2fdb27(0xf4)](_0x4c4a40),_0x25be3e['appendChild'](_0x509b50);});}function shareTwitter(){const _0x22f7a8=_0x3b4960,_0x3c98d4=document[_0x22f7a8(0xd1)]('result-type')['textContent'],_0x113520=_0x22f7a8(0x162)+_0x3c98d4+_0x22f7a8(0x14c),_0x31349d=window[_0x22f7a8(0xbb)][_0x22f7a8(0x11e)];window[_0x22f7a8(0x11a)](_0x22f7a8(0x129)+encodeURIComponent(_0x113520)+_0x22f7a8(0x135)+encodeURIComponent(_0x31349d),_0x22f7a8(0xee));}function shareFacebook(){const _0x5a02bf=_0x3b4960,_0x42c1c8=window['location'][_0x5a02bf(0x11e)];window[_0x5a02bf(0x11a)]('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(_0x42c1c8),_0x5a02bf(0xee));}function shareLinkedIn(){const _0x3fdb8a=_0x3b4960,_0x19abfb=document[_0x3fdb8a(0xd1)](_0x3fdb8a(0x138))[_0x3fdb8a(0x131)],_0x385d87=_0x3fdb8a(0x162)+_0x19abfb+_0x3fdb8a(0xe4),_0x435207=window[_0x3fdb8a(0xbb)][_0x3fdb8a(0x11e)];window[_0x3fdb8a(0x11a)]('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(_0x435207)+'&title='+encodeURIComponent(_0x3fdb8a(0x144))+_0x3fdb8a(0xfd)+encodeURIComponent(_0x385d87),'_blank');}function restartQuiz(){const _0x2aba36=_0x3b4960;currentQuestion=0x0,answers=[],riskScore=0x0,stabilityScore=0x0,document[_0x2aba36(0xd1)](_0x2aba36(0x15a))[_0x2aba36(0x12e)][_0x2aba36(0xd9)](_0x2aba36(0x13c)),document[_0x2aba36(0xd1)](_0x2aba36(0xb6))[_0x2aba36(0x12e)][_0x2aba36(0x15d)](_0x2aba36(0x13c));}
+  </script>
+</body>
+</html>
